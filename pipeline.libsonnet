@@ -106,6 +106,7 @@
     withAddress(address):: self + { address: address },
     withCC(cc):: self + { cc: cc },
     withLevel(level):: self + { level: level },
+    withPublisherName(publisherName):: self + { publisherName: publisherName },
     // Custom notification messages are optional
     withWhen(when, message=false):: self + {
       when+: [when],
