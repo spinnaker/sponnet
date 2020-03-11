@@ -55,6 +55,7 @@
     gcsObject():: artifact('gcs/object', 'gcs'),
     githubFile():: artifact('github/file', 'github'),
     gitlabFile():: artifact('gitlab/file', 'gitlab'),
+    gitRepo():: artifact('git/repo', 'git'),
     httpFile():: artifact('http/file', 'http'),
     s3Object():: artifact('s3/object', 's3'),
     // kubernetesObject to be tested. Where kind is Deployment/Configmap/Service/etc
