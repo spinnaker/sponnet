@@ -71,6 +71,7 @@
     displayName: id,
     withMatchArtifact(matchArtifact):: self + {
       matchArtifact+: {
+        [if 'reference' in matchArtifact then 'reference']: matchArtifact.reference,
         // TODO: For Docker, the name field should be registry and repository.
         name: matchArtifact.name,
         type: matchArtifact.type,
@@ -80,7 +81,7 @@
     },
     withDefaultArtifact(defaultArtifact):: self + {
       defaultArtifact: {
-        reference: defaultArtifact.reference,
+        [if 'reference' in defaultArtifact then 'reference']: defaultArtifact.reference,
         type: defaultArtifact.type,
         kind: if defaultArtifact.kind == 'custom' then defaultArtifact else 'default.' + defaultArtifact.kind,
         // TODO: Some Artifact types (docker) don't require version to be set. It may be better to do this differently.
