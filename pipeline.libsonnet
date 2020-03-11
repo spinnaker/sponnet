@@ -308,7 +308,7 @@
       overrides: {},
       templateArtifact:: [],
       valueArtifacts:: [],
-      withExpectedArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { expectedArtifacts: [{ id: a.id, matchArtifact: a.matchArtifact } for a in artifacts] } else { expectedArtifacts: [{ id: artifacts.id, matchArtifacts: artifacts.matchArtifact }] },
+      withExpectedArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { expectedArtifacts: [{ id: a.id, displayName: a.displayName, matchArtifact: a.matchArtifact } for a in artifacts] } else { expectedArtifacts: [{ id: artifacts.id, displayName: artifacts.displayName, matchArtifact: artifacts.matchArtifact }] },
       withKustomizeFilePath(kustomizeFilePath):: self + { kustomizeFilePath: kustomizeFilePath },
       withNamespace(namespace):: self + { namespace: namespace },
       withReleaseName(name):: self + { outputName: name },
