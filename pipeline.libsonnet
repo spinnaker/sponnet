@@ -302,23 +302,25 @@
 
     // kubernetes stages
 
-    bakeManifest(name):: stage(name, 'bakeManifest') {
-      templateRenderer: 'HELM2',
+    bakeManifest(name, renderer='HELM2'):: stage(name, 'bakeManifest') {
+      templateRenderer: renderer,
       inputArtifacts: self.templateArtifact + self.valueArtifacts,
       overrides: {},
       templateArtifact:: [],
       valueArtifacts:: [],
       withExpectedArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { expectedArtifacts: [{ id: a.id, matchArtifact: a.matchArtifact } for a in artifacts] } else { expectedArtifacts: [{ id: artifacts.id, matchArtifacts: artifacts.matchArtifact }] },
+      withKustomizeFilePath(kustomizeFilePath):: self + { kustomizeFilePath: kustomizeFilePath },
       withNamespace(namespace):: self + { namespace: namespace },
       withReleaseName(name):: self + { outputName: name },
+      withAccountArtifact(artifact):: self + { inputArtifact: { id: artifact.id, account: artifact.defaultArtifact.artifactAccount } },
       withTemplateArtifact(artifact):: self + { templateArtifact:: [artifact] },
       withValueArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { valueArtifacts:: artifacts } else { valueArtifacts:: [artifacts] },
       withValueOverrides(overrides):: self + { overrides: overrides },
       addValueOverride(key, value):: self + { overrides: super.overrides + { [key]: value } },
     },
-    deployManifest(name):: stage(name, 'deployManifest') {
+    deployManifest(name, type='text'):: stage(name, 'deployManifest') {
       cloudProvider: 'kubernetes',
-      source: 'text',
+      source: type,
       withAccount(account):: self + { account: account },
       withManifestArtifactAccount(account):: self + { manifestArtifactAccount: account },
       // Add/Default to embedded-artifact? If so add:  /* , manifestArtifactAccount: 'embedded-artifact' */
