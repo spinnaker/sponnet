@@ -33,5 +33,8 @@
     withPlatformHealthOnlyShowOverride(platformHealthOnlyShowOverride):: self + { platformHealthOnlyShowOverride: platformHealthOnlyShowOverride },
     withTrafficGuards(trafficGuards):: self + if std.type(trafficGuards) == 'array' then { trafficGuards: trafficGuards } else { trafficGuards: [trafficGuards] },
     withUser(user):: self + { user: user },
+    withRepoProjectKey(repoProjectKey):: self + { repoProjectKey: repoProjectKey },
+    withRepoSlug(repoSlug):: self + { repoSlug: repoSlug },
+    withRepoType(repoType):: self + { repoType: repoType },
   },
 }
