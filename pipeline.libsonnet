@@ -365,7 +365,7 @@
       withAccount(account):: self + { account: account },
       withNamespace(namespace):: self + { location: namespace },
       withReplicas(replicas):: self + { replicas: replicas },
-      withManifestName(kind, name):: self.options { manifestName: kind + ' ' + name },
+      withManifestName(kind, name):: self + { manifestName: kind + ' ' + name },
     },
     undoRolloutManifest(name): stage(name, 'undoRolloutManifest') {
       cloudProvider: 'kubernetes',
