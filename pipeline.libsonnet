@@ -136,13 +136,12 @@
 
   trafficManagement():: {
     enabled: true,
-    options,
     isEnabled(isEnabled):: self + { enabled: isEnabled },
-    enableTraffic(enableTraffic):: self.options + { enableTraffic: enableTraffic },
-    withNamespace(namespace):: self.options + { namespace: namespace },
-    withServices(services):: self.options + if std.type(services) == 'array' then { services: services } else { services: [services] },
-    withStrategy(strategy):: self.options + { strategy: strategy },
-  }
+    withEnableTraffic(enableTraffic):: self + { options+: { enableTraffic: enableTraffic } },
+    withNamespace(namespace):: self + { options+: { namespace: namespace } },
+    withServices(services):: self + { options+: if std.type(services) == 'array' then { services: services } else { services: [services] } },
+    withStrategy(strategy):: self + { options+: { strategy: strategy } },
+  },
 
   // triggers
 
