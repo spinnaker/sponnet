@@ -357,14 +357,14 @@
       },
       withAccount(account):: self + { account: account },
       withNamespace(namespace):: self + { location: namespace },
-      withPatchBody(patchBody): self + { patchBody: patchBody },
+      withPatchBody(patchBody):: self + { patchBody: patchBody },
       withManifestName(kind, name):: self.options { manifestName: kind + ' ' + name },
     },
     scaleManifest(name): stage(name, 'scaleManifest') {
       cloudProvider: 'kubernetes',
       withAccount(account):: self + { account: account },
       withNamespace(namespace):: self + { location: namespace },
-      withReplicas(replicas): self + { replicas: replicas },
+      withReplicas(replicas):: self + { replicas: replicas },
       withManifestName(kind, name):: self.options { manifestName: kind + ' ' + name },
     },
     undoRolloutManifest(name): stage(name, 'undoRolloutManifest') {
