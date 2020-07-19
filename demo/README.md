@@ -21,6 +21,12 @@ You will need the following:
   sudo mv jsonnet /usr/local/bin/jsonnet
   ```
 
+To build the demo project, run:
+
+```bash
+jsonnet demo-project.jsonnet
+```
+
 To build the demo application, run:
 
 ```bash
