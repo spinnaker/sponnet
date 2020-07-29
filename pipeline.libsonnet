@@ -134,6 +134,15 @@
     withOptions(options):: self + { hasOptions: true, options: [{ value: x } for x in options] },
   },
 
+  trafficManagement():: {
+    enabled: true,
+    isEnabled(isEnabled):: self + { enabled: isEnabled },
+    withEnableTraffic(enableTraffic):: self + { options+: { enableTraffic: enableTraffic } },
+    withNamespace(namespace):: self + { options+: { namespace: namespace } },
+    withServices(services):: self + { options+: if std.type(services) == 'array' then { services: services } else { services: [services] } },
+    withStrategy(strategy):: self + { options+: { strategy: strategy } },
+  },
+
   // triggers
 
   trigger(name, type):: {
@@ -306,7 +315,7 @@
       overrides: {},
       templateArtifact:: [],
       valueArtifacts:: [],
-      withExpectedArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { expectedArtifacts: [{ id: a.id, matchArtifact: a.matchArtifact } for a in artifacts] } else { expectedArtifacts: [{ id: artifacts.id, matchArtifacts: artifacts.matchArtifact }] },
+      withExpectedArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { expectedArtifacts: [{ id: a.id, displayName: a.displayName, matchArtifact: a.matchArtifact } for a in artifacts] } else { expectedArtifacts: [{ id: artifacts.id, displayName: artifacts.displayName, matchArtifacts: artifacts.matchArtifact }] },
       withNamespace(namespace):: self + { namespace: namespace },
       withReleaseName(name):: self + { outputName: name },
       withTemplateArtifact(artifact):: self + { templateArtifact:: [artifact] },
@@ -326,6 +335,7 @@
       withMoniker(moniker):: self + { moniker: moniker },
       withSkipExpressionEvaluation():: self + { skipExpressionEvaluation: true },
       withNamespaceOverride(namespace):: self + { namespaceOverride: namespace },
+      withTrafficManagement(trafficManagement):: self + { trafficManagement: trafficManagement },
     },
     deleteManifest(name):: stage(name, 'deleteManifest') {
       cloudProvider: 'kubernetes',
@@ -357,15 +367,15 @@
       },
       withAccount(account):: self + { account: account },
       withNamespace(namespace):: self + { location: namespace },
-      withPatchBody(patchBody): self + { patchBody: patchBody },
+      withPatchBody(patchBody):: self + { patchBody: patchBody },
       withManifestName(kind, name):: self.options { manifestName: kind + ' ' + name },
     },
     scaleManifest(name): stage(name, 'scaleManifest') {
       cloudProvider: 'kubernetes',
       withAccount(account):: self + { account: account },
       withNamespace(namespace):: self + { location: namespace },
-      withReplicas(replicas): self + { replicas: replicas },
-      withManifestName(kind, name):: self.options { manifestName: kind + ' ' + name },
+      withReplicas(replicas):: self + { replicas: replicas },
+      withManifestName(kind, name):: self + { manifestName: kind + ' ' + name },
     },
     undoRolloutManifest(name): stage(name, 'undoRolloutManifest') {
       cloudProvider: 'kubernetes',
