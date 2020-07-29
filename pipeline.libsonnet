@@ -60,6 +60,7 @@
     // kubernetesObject to be tested. Where kind is Deployment/Configmap/Service/etc
     kubernetesObject(kind):: artifact('kubernetes/' + kind, 'custom'),
     front50PipelineTemplate():: artifact('front50/pipelineTemplate', '').withArtifactAccount('front50ArtifactCredentials'),  // credentials are static
+    helmChart():: artifact('helm/chart', 'helm'),
   },
 
   // expected artifacts
