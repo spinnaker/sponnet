@@ -134,6 +134,15 @@
     withOptions(options):: self + { hasOptions: true, options: [{ value: x } for x in options] },
   },
 
+  trafficManagement():: {
+    enabled: true,
+    isEnabled(isEnabled):: self + { enabled: isEnabled },
+    withEnableTraffic(enableTraffic):: self + { options+: { enableTraffic: enableTraffic } },
+    withNamespace(namespace):: self + { options+: { namespace: namespace } },
+    withServices(services):: self + { options+: if std.type(services) == 'array' then { services: services } else { services: [services] } },
+    withStrategy(strategy):: self + { options+: { strategy: strategy } },
+  },
+
   // triggers
 
   trigger(name, type):: {
@@ -326,6 +335,7 @@
       withMoniker(moniker):: self + { moniker: moniker },
       withSkipExpressionEvaluation():: self + { skipExpressionEvaluation: true },
       withNamespaceOverride(namespace):: self + { namespaceOverride: namespace },
+      withTrafficManagement(trafficManagement):: self + { trafficManagement: trafficManagement },
     },
     deleteManifest(name):: stage(name, 'deleteManifest') {
       cloudProvider: 'kubernetes',
