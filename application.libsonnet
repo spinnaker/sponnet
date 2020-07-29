@@ -33,5 +33,11 @@
     withPlatformHealthOnlyShowOverride(platformHealthOnlyShowOverride):: self + { platformHealthOnlyShowOverride: platformHealthOnlyShowOverride },
     withTrafficGuards(trafficGuards):: self + if std.type(trafficGuards) == 'array' then { trafficGuards: trafficGuards } else { trafficGuards: [trafficGuards] },
     withUser(user):: self + { user: user },
+    withPermissions(permissions):: self + { permissions: permissions },
+  },
+  permissions():: {
+    withRead(read):: self + if std.type(read) == 'array' then { READ+: read } else { READ+: [read] },
+    withWrite(write):: self + if std.type(write) == 'array' then { WRITE+: write } else { WRITE+: [write] },
+    withExecute(execute):: self + if std.type(execute) == 'array' then { EXECUTE+: execute } else { EXECUTE+: [execute] },
   },
 }
