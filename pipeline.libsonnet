@@ -76,6 +76,7 @@
         type: matchArtifact.type,
         kind: matchArtifact.kind,
         [if 'artifactAccount' in matchArtifact then 'artifactAccount']: matchArtifact.artifactAccount,
+        kind: if matchArtifact.kind == 'custom' then matchArtifact else 'default.' + matchArtifact.kind,
         customKind: if matchArtifact.kind == 'custom' then true else false,
         id: id,
       },
@@ -85,6 +86,7 @@
         reference: defaultArtifact.reference,
         type: defaultArtifact.type,
         id: id,
+        kind: if defaultArtifact.kind == 'custom' then defaultArtifact else 'default.' + defaultArtifact.kind,
         customKind: if defaultArtifact.kind == 'custom' then true else false,
         // TODO: Some Artifact types (docker) don't require version to be set. It may be better to do this differently.
         [if 'version' in defaultArtifact then 'version']: defaultArtifact.version,
