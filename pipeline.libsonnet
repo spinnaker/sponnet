@@ -76,7 +76,6 @@
         type: matchArtifact.type,
         kind: matchArtifact.kind,
         [if 'artifactAccount' in matchArtifact then 'artifactAccount']: matchArtifact.artifactAccount,
-        kind: if matchArtifact.kind == 'custom' then matchArtifact else 'default.' + matchArtifact.kind,
         customKind: if matchArtifact.kind == 'custom' then true else false,
         id: id,
       },
