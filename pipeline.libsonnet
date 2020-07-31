@@ -76,13 +76,16 @@
         type: matchArtifact.type,
         kind: matchArtifact.kind,
         [if 'artifactAccount' in matchArtifact then 'artifactAccount']: matchArtifact.artifactAccount,
+        customKind: if matchArtifact.kind == 'custom' then true else false,
+        id: id,
       },
     },
     withDefaultArtifact(defaultArtifact):: self + {
       defaultArtifact: {
         reference: defaultArtifact.reference,
         type: defaultArtifact.type,
-        kind: if defaultArtifact.kind == 'custom' then defaultArtifact else 'default.' + defaultArtifact.kind,
+        id: id,
+        customKind: if defaultArtifact.kind == 'custom' then true else false,
         // TODO: Some Artifact types (docker) don't require version to be set. It may be better to do this differently.
         [if 'version' in defaultArtifact then 'version']: defaultArtifact.version,
         [if 'name' in defaultArtifact then 'name']: defaultArtifact.name,
@@ -194,6 +197,15 @@
     cron(name, cronExpression):: trigger(name, 'cron') {
       cronExpression: cronExpression,
     },
+    jenkins(name):: trigger(name, 'jenkins') {
+      withJob(job):: self + { job: job },
+      withMaster(master):: self + { master: master },
+      withUser(user):: self + { runAsUser: user },
+      withParameters(parameters):: self + { parameters: parameters },
+      withPropertyFile(propertyFile):: self + { propertyFile: propertyFile },
+      withMarkUnstableAsSuccessful(markUnstableAsSuccessful):: self + { markUnstableAsSuccessful: markUnstableAsSuccessful },
+      withWaitForCompletion(waitForCompletion):: self + { waitForCompletion: waitForCompletion },
+    },
   },
 
   // stages
@@ -203,6 +215,7 @@
     name: name,
     type: type,
     requisiteStageRefIds: [],
+    withrequisiteStageRefIds(ids):: self + {requisiteStageRefIds: ids},
     withNotifications(notifications):: self + { sendNotifications: true } + if std.type(notifications) == 'array' then { notifications: notifications } else { notifications: [notifications] },
     withRequisiteStages(stages):: self + if std.type(stages) == 'array' then { requisiteStageRefIds: std.map(function(stage) stage.refId, stages) } else { requisiteStageRefIds: [stages.refId] },
     // execution options
@@ -218,6 +231,9 @@
                                                                   (std.prune({ restrictedExecutionWindow+: { jitter: jitter } })),
     withSkipWindowText(skipWindowText):: self + { skipWindowText: skipWindowText },
     withOverrideTimeout(timeoutMs):: self + { overrideTimeout: true, stageTimeoutMs: timeoutMs },
+    withRefId(id):: self + {refId: id},
+    inject: {},
+    addinject(key, value):: self + { inject+: { [key]: value } },
   },
 
   local stage = self.stage,
@@ -318,7 +334,8 @@
       valueArtifacts:: [],
       withExpectedArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { expectedArtifacts: [{ id: a.id, displayName: a.displayName, matchArtifact: a.matchArtifact } for a in artifacts] } else { expectedArtifacts: [{ id: artifacts.id, displayName: artifacts.displayName, matchArtifacts: artifacts.matchArtifact }] },
       withNamespace(namespace):: self + { namespace: namespace },
-      withReleaseName(name):: self + { outputName: name },
+      withManifestArtifact(artifact):: self + { manifestArtifactId: artifact.id, source: 'artifact' },
+      withReleaseOutputName(name):: self + { outputName: name },
       withTemplateArtifact(artifact):: self + { templateArtifact:: [artifact] },
       withValueArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { valueArtifacts:: artifacts } else { valueArtifacts:: [artifacts] },
       withValueOverrides(overrides):: self + { overrides: overrides },
@@ -422,6 +439,15 @@
         buildDefinition: buildDefinition,
       },
       withAccount(account):: self + { account: account },
+    },
+
+    // webhook stages
+    webhook(name):: stage(name, 'webhook') {
+      payload: {},
+      addPayloadConstraint(key, value):: self + { payload+: super.payload + { [key]: value } },
+      withUrl(url):: self + { url: url },
+      withMethod(method):: self + { method: method },
+      withStatusUrlResolution(res):: self + { statusUrlResolution: res},
     },
 
   },
