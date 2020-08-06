@@ -444,10 +444,10 @@
 
     // webhook stages
     webhook(name):: stage(name, 'webhook') {
-      payload: {},
-      addPayloadConstraint(key, value):: self + { payload+: super.payload + { [key]: value } },
+      addPayloadConstraint(key, value):: self + if "payload" in self then { payload+: super.payload + { [key]: value } } else { payload: { [key]: value } },
       withUrl(url):: self + { url: url },
       withMethod(method):: self + { method: method },
+      withPayload(payload):: self + { payload: payload },
       withStatusUrlResolution(res):: self + { statusUrlResolution: res},
     },
 
