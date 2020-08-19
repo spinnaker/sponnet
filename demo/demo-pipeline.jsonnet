@@ -175,7 +175,7 @@ local findArtifactsFromResource = sponnet.stages
 
 local bakeManifest = sponnet.stages
                      .bakeManifest('Bake a manifest')
-                     .withReleaseName(app)
+                     .withReleaseOutputName(app)
                      .withNamespace('default')
                      .withTemplateArtifact(sponnet.inputArtifact(expectedHelm.id).fromAccount("s3"))
                      .withValueArtifacts([sponnet.inputArtifact(expectedManifest.id).fromAccount("gitlab")])
