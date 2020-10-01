@@ -338,6 +338,7 @@
       withManifestArtifact(artifact):: self + { manifestArtifactId: artifact.id, source: 'artifact' },
       withReleaseOutputName(name):: self + { outputName: name },
       withTemplateArtifact(artifact):: self + { templateArtifact:: [artifact] },
+      withTemplateRenderer(templateRenderer):: self + { templateRenderer: templateRenderer },
       withValueArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { valueArtifacts:: artifacts } else { valueArtifacts:: [artifacts] },
       withValueOverrides(overrides):: self + { overrides: overrides },
       addValueOverride(key, value):: self + { overrides: super.overrides + { [key]: value } },
