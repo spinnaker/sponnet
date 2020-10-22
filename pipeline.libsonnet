@@ -409,6 +409,7 @@
       withAccount(account):: self + { account: account },
       withApplication(application):: self + { application: application },
       withManifestArtifactAccount(account):: self + { manifestArtifactAccount: account },
+      withNamespace(namespace):: self + { location: namespace },
       withManifestArtifact(artifact):: self + { manifestArtifactId: artifact.id, manifestArtifactAccount: artifact.matchArtifact.artifactAccount, source: 'artifact' },
       withManifestText(text):: self + { manifest: std.parseJson(text), source: 'text' },
       withRequiredArtifactIds(artifacts):: self + { requiredArtifactIds: [a.id for a in artifacts] },
