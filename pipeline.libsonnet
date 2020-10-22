@@ -379,6 +379,7 @@
     },
     patchManifest(name):: stage(name, 'patchManifest') {
       cloudProvider: 'kubernetes',
+      mode: 'static',
       source: 'text',
       options: {
         mergeStrategy: 'strategic',
