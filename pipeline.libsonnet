@@ -391,6 +391,7 @@
     },
     scaleManifest(name): stage(name, 'scaleManifest') {
       cloudProvider: 'kubernetes',
+      mode: 'static',
       withAccount(account):: self + { account: account },
       withNamespace(namespace):: self + { location: namespace },
       withReplicas(replicas):: self + { replicas: replicas },
