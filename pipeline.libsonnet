@@ -384,6 +384,7 @@
         mergeStrategy: 'strategic',
         record: true,
       },
+      withApplication(application):: self + { app: application },
       withAccount(account):: self + { account: account },
       withNamespace(namespace):: self + { location: namespace },
       withPatchBody(patchBody):: self + { patchBody: patchBody },
