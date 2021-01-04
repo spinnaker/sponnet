@@ -328,7 +328,7 @@
     // kubernetes stages
 
     bakeManifest(name):: stage(name, 'bakeManifest') {
-      templateRenderer: 'HELM2',
+      templateRenderer: 'HELM3',
       inputArtifacts: self.templateArtifact + self.valueArtifacts,
       overrides: {},
       templateArtifact:: [],
