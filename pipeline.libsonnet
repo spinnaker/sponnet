@@ -99,7 +99,7 @@
   },
 
   inputArtifact(id):: {
-    id: id,
+    artifact: id,
     fromAccount(account):: self + {
       account: account,
     },
