@@ -334,7 +334,7 @@
       templateArtifact:: [],
       valueArtifacts:: [],
       withEvaluateOverrideExpressions(evaluateOverrideExpressions):: self + { evaluateOverrideExpressions: evaluateOverrideExpressions },
-      withExpectedArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { expectedArtifacts: [{ id: a.id, displayName: a.displayName, matchArtifact: a.matchArtifact } for a in artifacts] } else { expectedArtifacts: [{ id: artifacts.id, displayName: artifacts.displayName, matchArtifacts: artifacts.matchArtifact }] },
+      withExpectedArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { expectedArtifacts: [{ id: a.id, displayName: a.displayName, matchArtifact: a.matchArtifact } for a in artifacts] } else { expectedArtifacts: [{ id: artifacts.id, displayName: artifacts.displayName, matchArtifact: artifacts.matchArtifact }] },
       withNamespace(namespace):: self + { namespace: namespace },
       withManifestArtifact(artifact):: self + { manifestArtifactId: artifact.id, source: 'artifact' },
       withRawOverrides(rawOverrides):: self + { rawOverrides: rawOverrides },
