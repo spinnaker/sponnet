@@ -369,7 +369,7 @@
       withNamespace(namespace):: self + { location: namespace },
       withLabelSelectors(selectors)::
         local selectorsArray = if std.type(selectors) == 'array' then selectors else [selectors];
-        self + { mode: 'label', labelSelectors: { selectors: selectors } },
+        self + { mode: 'label', labelSelectors: { selectors: selectorsArray } },
       withGracePeriodSeconds(seconds):: self.options { gracePeriodSeconds: seconds },
       withManifestName(kind, name):: self + { manifestName: kind + ' ' + name },
     },
