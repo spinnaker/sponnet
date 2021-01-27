@@ -25,6 +25,7 @@
     withSchema(schema):: self + { schema: schema },
     withInherit(inheritedFields):: self + if std.type(inheritedFields) == 'array' then { inherit: inheritedFields } else { inherit: [inheritedFields] },
     withVariableValues(variables):: self + { variables: variables },  // variables are key-value pairs of <variable name> -> <variable value>
+    withTemplateParameters(parameters):: self + if std.type(parameters) == 'array' then { parameters: parameters } else { parameters: [parameters] },
   },
 
   moniker(app, cluster=null):: {
