@@ -393,7 +393,7 @@
       withAccount(account):: self + { account: account },
       withNamespace(namespace):: self + { location: namespace },
       withPatchBody(patchBody):: self + { patchBody: patchBody },
-      withManifestName(kind, name):: self.options { manifestName: kind + ' ' + name },
+      withManifestName(kind, name):: self + { manifestName: kind + ' ' + name },
     },
     scaleManifest(name): stage(name, 'scaleManifest') {
       cloudProvider: 'kubernetes',
