@@ -383,6 +383,7 @@
     },
     patchManifest(name):: stage(name, 'patchManifest') {
       cloudProvider: 'kubernetes',
+      mode: 'static',
       source: 'text',
       options: {
         mergeStrategy: 'strategic',
@@ -396,6 +397,7 @@
     },
     scaleManifest(name): stage(name, 'scaleManifest') {
       cloudProvider: 'kubernetes',
+      mode: 'static',
       withAccount(account):: self + { account: account },
       withApplication(application):: self + { app: application },
       withClusterName(kind, name):: self + { cluster: kind + ' ' + name },
