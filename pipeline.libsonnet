@@ -396,9 +396,14 @@
     scaleManifest(name): stage(name, 'scaleManifest') {
       cloudProvider: 'kubernetes',
       withAccount(account):: self + { account: account },
+      withApplication(application):: self + { app: application },
+      withClusterName(kind, name):: self + { cluster: kind + ' ' + name },
+      withCriteria(criteria):: self + { criteria: criteria },
+      withKind(kind):: self + { kind: kind },
+      withManifestName(kind, name):: self + { manifestName: kind + ' ' + name },
+      withMode(mode):: self + {mode: mode},
       withNamespace(namespace):: self + { location: namespace },
       withReplicas(replicas):: self + { replicas: replicas },
-      withManifestName(kind, name):: self + { manifestName: kind + ' ' + name },
     },
     undoRolloutManifest(name): stage(name, 'undoRolloutManifest') {
       cloudProvider: 'kubernetes',
