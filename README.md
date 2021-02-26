@@ -12,6 +12,7 @@ local sponnet = import 'pipeline.libsonnet';
 local parameters = [
   {
     name: "image_tag",
+    description: "The docker image tag to deploy",
     required: true,
   }
 ];
