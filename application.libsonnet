@@ -17,7 +17,6 @@
     },
     trafficGuards: [],
     // set overrides
-    withAccounts(accounts):: self + if std.type(accounts) == 'array' then { accounts: accounts } else { accounts: [accounts] },
     withAliases(aliases):: self + { aliases: aliases },
     withClusters(clusters):: self + if std.type(clusters) == 'array' then { clusters: clusters } else { clusters: [clusters] },
     withCloudProviders(cloudProviders):: self + { cloudProviders: cloudProviders },
