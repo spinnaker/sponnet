@@ -217,7 +217,7 @@
     name: name,
     type: type,
     requisiteStageRefIds: [],
-    withrequisiteStageRefIds(ids):: self + {requisiteStageRefIds: ids},
+    withrequisiteStageRefIds(ids):: self + { requisiteStageRefIds: ids },
     withNotifications(notifications):: self + { sendNotifications: true } + if std.type(notifications) == 'array' then { notifications: notifications } else { notifications: [notifications] },
     withRequisiteStages(stages):: self + if std.type(stages) == 'array' then { requisiteStageRefIds: std.map(function(stage) stage.refId, stages) } else { requisiteStageRefIds: [stages.refId] },
     // execution options
@@ -233,7 +233,7 @@
                                                                   (std.prune({ restrictedExecutionWindow+: { jitter: jitter } })),
     withSkipWindowText(skipWindowText):: self + { skipWindowText: skipWindowText },
     withOverrideTimeout(timeoutMs):: self + { overrideTimeout: true, stageTimeoutMs: timeoutMs },
-    withRefId(id):: self + {refId: id},
+    withRefId(id):: self + { refId: id },
     inject: {},
     addinject(key, value):: self + { inject+: { [key]: value } },
   },
@@ -267,7 +267,7 @@
           type: 'expression',
         }],
       },
-      withCloudProvider(provider):: self + {cloudProvider: provider},
+      withCloudProvider(provider):: self + { cloudProvider: provider },
       withClusterSize(cluster, comparison, credentials, expected, moniker, regions, failPipeline):: self + {
         preconditions+: [{
           context: {
@@ -404,7 +404,7 @@
       withCriteria(criteria):: self + { criteria: criteria },
       withKind(kind):: self + { kind: kind },
       withManifestName(kind, name):: self + { manifestName: kind + ' ' + name },
-      withMode(mode):: self + {mode: mode},
+      withMode(mode):: self + { mode: mode },
       withNamespace(namespace):: self + { location: namespace },
       withReplicas(replicas):: self + { replicas: replicas },
     },
@@ -460,7 +460,8 @@
       withUrl(url):: self + { url: url },
       withMethod(method):: self + { method: method },
       withPayload(payload):: self + { payload: payload },
-      withStatusUrlResolution(res):: self + { statusUrlResolution: res},
+      withStatusUrlResolution(res):: self + { statusUrlResolution: res },
+      withCustomHeaders(customHeaders):: self + { customHeaders: customHeaders },
     },
 
   },
