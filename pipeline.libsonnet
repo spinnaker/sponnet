@@ -56,6 +56,7 @@
     gcsObject():: artifact('gcs/object', 'gcs'),
     githubFile():: artifact('github/file', 'github'),
     gitlabFile():: artifact('gitlab/file', 'gitlab'),
+    gitRepo():: artifact('git/repo', null),
     httpFile():: artifact('http/file', 'http'),
     s3Object():: artifact('s3/object', 's3'),
     // kubernetesObject to be tested. Where kind is Deployment/Configmap/Service/etc
@@ -341,6 +342,7 @@
       withRawOverrides(rawOverrides):: self + { rawOverrides: rawOverrides },
       withReleaseOutputName(name):: self + { outputName: name },
       withTemplateArtifact(artifact):: self + { templateArtifact:: [artifact] },
+      withHelmChartFilePath(filePath):: self + { helmChartFilePath: filePath },
       withTemplateRenderer(templateRenderer):: self + { templateRenderer: templateRenderer },
       withValueArtifacts(artifacts):: self + if std.type(artifacts) == 'array' then { valueArtifacts:: artifacts } else { valueArtifacts:: [artifacts] },
       withValueOverrides(overrides):: self + { overrides: overrides },
