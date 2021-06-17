@@ -195,6 +195,7 @@
       application: application,
       pipeline: pipeline,
       status: statuses,
+      withRunAsUser(runAsUser):: self + { runAsUser: runAsUser },
     },
     cron(name, cronExpression):: trigger(name, 'cron') {
       cronExpression: cronExpression,
