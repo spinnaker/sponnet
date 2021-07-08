@@ -195,6 +195,7 @@
       application: application,
       pipeline: pipeline,
       status: statuses,
+      withRunAsUser(runAsUser):: self + { runAsUser: runAsUser },
     },
     cron(name, cronExpression):: trigger(name, 'cron') {
       cronExpression: cronExpression,
@@ -462,6 +463,7 @@
       withPayload(payload):: self + { payload: payload },
       withStatusUrlResolution(res):: self + { statusUrlResolution: res },
       withCustomHeaders(customHeaders):: self + { customHeaders: customHeaders },
+      withWaitForCompletion(waitForCompletion):: self + { waitForCompletion: waitForCompletion },
     },
 
   },
