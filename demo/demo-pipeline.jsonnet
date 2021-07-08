@@ -77,8 +77,7 @@ local expectedHelm = sponnet.expectedArtifact(myHelmArtifactName)
 
 local bakedManifest = sponnet.artifacts
                       .embeddedBase64()
-                      .withName(app+"-baked")
-                      .withKind("base64");
+                      .withName(app+"-baked");
 
 local expectedBakedManifest = sponnet.expectedArtifact(app+"-baked")
                               .withMatchArtifact(bakedManifest);

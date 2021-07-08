@@ -37,31 +37,29 @@
 
   // artifacts
 
-  artifact(type, kind):: {
+  artifact(type):: {
     type: type,
-    kind: kind,
     withArtifactAccount(artifactAccount):: self + { artifactAccount: artifactAccount },
     withLocation(location):: self + { location: location },
     withName(name):: self + { name: name },
     withReference(reference):: self + { reference: reference },
     withVersion(version):: self + { version: version },
-    withKind(kind):: self + { kind: kind },
   },
 
   local artifact = self.artifact,
   artifacts:: {
-    bitbucketFile():: artifact('bitbucket/file', 'bitbucket'),
-    dockerImage():: artifact('docker/image', 'docker'),
-    embeddedBase64():: artifact('embedded/base64', 'base64'),
-    gcsObject():: artifact('gcs/object', 'gcs'),
-    githubFile():: artifact('github/file', 'github'),
-    gitlabFile():: artifact('gitlab/file', 'gitlab'),
-    httpFile():: artifact('http/file', 'http'),
-    s3Object():: artifact('s3/object', 's3'),
+    bitbucketFile():: artifact('bitbucket/file'),
+    dockerImage():: artifact('docker/image'),
+    embeddedBase64():: artifact('embedded/base64'),
+    gcsObject():: artifact('gcs/object'),
+    githubFile():: artifact('github/file'),
+    gitlabFile():: artifact('gitlab/file'),
+    helmChart():: artifact('helm/chart'),
+    httpFile():: artifact('http/file'),
+    s3Object():: artifact('s3/object'),
     // kubernetesObject to be tested. Where kind is Deployment/Configmap/Service/etc
-    kubernetesObject(kind):: artifact('kubernetes/' + kind, 'custom'),
-    front50PipelineTemplate():: artifact('front50/pipelineTemplate', '').withArtifactAccount('front50ArtifactCredentials'),  // credentials are static
-    helmChart():: artifact('helm/chart', 'helm'),
+    kubernetesObject(kind):: artifact('kubernetes/' + kind),
+    front50PipelineTemplate():: artifact('front50/pipelineTemplate').withArtifactAccount('front50ArtifactCredentials'),  // credentials are static
   },
 
   // expected artifacts
@@ -75,9 +73,7 @@
         // TODO: For Docker, the name field should be registry and repository.
         name: matchArtifact.name,
         type: matchArtifact.type,
-        kind: matchArtifact.kind,
         [if 'artifactAccount' in matchArtifact then 'artifactAccount']: matchArtifact.artifactAccount,
-        customKind: if matchArtifact.kind == 'custom' then true else false,
         id: id,
       },
     },
@@ -86,8 +82,6 @@
         reference: defaultArtifact.reference,
         type: defaultArtifact.type,
         id: id,
-        kind: if defaultArtifact.kind == 'custom' then defaultArtifact else 'default.' + defaultArtifact.kind,
-        customKind: if defaultArtifact.kind == 'custom' then true else false,
         // TODO: Some Artifact types (docker) don't require version to be set. It may be better to do this differently.
         [if 'version' in defaultArtifact then 'version']: defaultArtifact.version,
         [if 'name' in defaultArtifact then 'name']: defaultArtifact.name,
