@@ -461,6 +461,7 @@
       withMethod(method):: self + { method: method },
       withPayload(payload):: self + { payload: payload },
       withStatusUrlResolution(res):: self + { statusUrlResolution: res},
+      withWaitForCompletion(waitForCompletion):: self + { waitForCompletion: waitForCompletion },
     },
 
   },
