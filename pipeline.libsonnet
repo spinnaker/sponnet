@@ -432,7 +432,7 @@
 
     pipeline(name):: stage(name, 'pipeline') {
       withApplication(application):: self + { application: application },
-      withPipeline(pipeline):: self + { pipeline: self.application + '-' + pipeline },
+      withPipeline(pipeline):: self + { pipeline: pipeline },
       withWaitForCompletion(waitForCompletion):: self + { waitForCompletion: waitForCompletion },
       withPipelineParameters(parameters):: self + { pipelineParameters: parameters },
       addPipelineParameter(key, value):: self + { pipelineParameters: super.pipelineParameters + { [key]: value } },
