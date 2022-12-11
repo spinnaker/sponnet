@@ -438,12 +438,6 @@
       addPipelineParameter(key, value):: self + { pipelineParameters: super.pipelineParameters + { [key]: value } },
     },
 
-    // wercker stages
-    // This stage has only been written from spec and not tested
-    wercker(name):: stage(name, 'wercker') {
-      withJob(job):: self + { job: job },
-      withMaster(master):: self + { master: master },
-    },
 
     // Google Cloud Build stages
 
